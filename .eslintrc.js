@@ -19,6 +19,11 @@ module.exports = {
     project: './tsconfig.json',
   },
   rules: {
-    '@typescript-eslint/no-unused-vars': 'error', 
+    "prettier/prettier": ["error", {
+      "endOfLine": "auto"
+    },],
+    "no-unused-vars": ["error",{
+      "vars": "off",
+    }],
   },
 };
