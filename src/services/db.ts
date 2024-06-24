@@ -6,7 +6,9 @@ import '../common/env';
 
 const DB_URI = process.env.MONGO_URI || process.env.LOCAL_CONNECTION_STRING;
 
-mongoose.connect(DB_URI);
+mongoose.connect(DB_URI, {
+  dbName: process.env.DB_NAME,
+});
 
 mongoose.Promise = global.Promise;
 
