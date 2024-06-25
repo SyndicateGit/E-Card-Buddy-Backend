@@ -1,11 +1,8 @@
 import { Request, Response } from 'express';
 import UserModel from '../users/UserModel';
 import jwt from 'jsonwebtoken';
-import handleErrors from './AuthErrorHandler';
-import bcrypt from 'bcrypt';
 
 const maxAge = 3 * 24 * 60 * 60 * 1000 * 1000;
-const saltRound = 10;
 
 const createToken = (userId) => {
   return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: maxAge });
@@ -33,7 +30,7 @@ const login = async (req: Request, res: Response) => {
       throw new Error("User not found");
     }
 
-    const isMatch = user.comparePassword(password);
+    const isMatch = await user.comparePassword(password);
 
     if(!isMatch){
       throw new Error("Password is incorrect");
