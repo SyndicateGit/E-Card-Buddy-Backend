@@ -25,6 +25,11 @@ UserSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
+UserSchema.method('comparePassword', async function (password: string) {
+  const user = this as UserInterface;
+  return await bcrypt.compare(password, user.password);
+});
+
 // Create the User model
 const User = mongoose.model<UserInterface>('User', UserSchema);
 
