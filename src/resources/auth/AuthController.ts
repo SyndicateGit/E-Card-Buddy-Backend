@@ -66,7 +66,7 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
       throw new Error("User not found");
     }
 
-    res.status(200).json({ success: true, data: {user: user}});
+    res.status(200).json({ success: true, data: {user: {...user, password: "nice try"} }});
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, error: error.message });
