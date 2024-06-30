@@ -1,6 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 import UserInterface from './UserInterface';
 import bcrypt from 'bcrypt';
+import {Role} from '../../types/types';
 
 // Define the User Schema
 const UserSchema = new Schema({
@@ -18,6 +19,11 @@ const UserSchema = new Schema({
     required: [true, 'Please provide a Password!'],
     unique: false,
   },
+  role: {
+    type: String,
+    required: true,
+    default: "user",
+  }
 });
 
 UserSchema.pre('save', async function (next) {

@@ -41,6 +41,7 @@
   "author": "Wubshet Zeleke",
   "license": "ISC",
   "dependencies": {
+    "@auth/core": "^0.34.1",
     "bcrypt": "^5.1.1",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
