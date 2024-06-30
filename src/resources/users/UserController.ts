@@ -1,15 +1,32 @@
 import { Request, Response, NextFunction } from 'express';
+import UserModel from './UserModel';
+import jwt from 'jsonwebtoken';
 
-const getAll = async (req: Request, res: Response, next: NextFunction) => {
+const getCurrentUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // use dummy data for now
-    const users = ['John Doe', 'Jane Doe', 'John Smith', 'Jane Smith'];
-    res.status(200).json(users);
+    const bearerHeader = req.headers['authorization'];
+
+    if(!bearerHeader){
+      throw new Error("No token found");
+    }
+
+    const bearer = bearerHeader.split(' ');
+
+    const bearerToken = bearer[1];
+
+    const decoded = jwt.verify(bearerToken, process.env.JWT_SECRET);
+
+    const user = await UserModel.findById(decoded.userId);
+
+    if(!user){
+      throw new Error("User not found");
+    }
+    res.status(200).json({ success: true, data: {user: {...user, password: "nice try"} }});
   } catch (error) {
-    next(error);
+    console.log(error);
+    res.status(500).json({ success: false, error: error.message });
   }
 };
-
 export default {
-  getAll,
+  getCurrentUser
 };
