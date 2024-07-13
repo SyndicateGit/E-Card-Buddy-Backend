@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import UserModel from './UserModel';
 import jwt from 'jsonwebtoken';
+const asyncHandler = require("express-async-handler");
 
-const getCurrentUser = async (req: Request, res: Response, next: NextFunction) => {
-  try {
+const getCurrentUser = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const bearerHeader = req.headers['authorization'];
 
     if(!bearerHeader){
@@ -21,13 +21,11 @@ const getCurrentUser = async (req: Request, res: Response, next: NextFunction) =
     if(!user){
       throw new Error("User not found");
     }
+
     user.password = "nice try";
     res.status(200).json({ success: true, data: {user: user }});
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, error: error.message });
-  }
-};
+});
+
 export default {
   getCurrentUser
 };

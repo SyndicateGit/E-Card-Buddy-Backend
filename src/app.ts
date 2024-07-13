@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 
 // to use env variables
 import './common/env';
+import { errorHandler } from './middlewares/errorMiddleware';
 
 require('dotenv').config();
 
@@ -39,6 +40,8 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/api/', routes);
 
+// error handler
+app.use(errorHandler);
 // Handle unknown endpoints
 app.use('*', unknownEndpoint);
 

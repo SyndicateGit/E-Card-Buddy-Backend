@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import userController from './UserController';
+import UserController from './UserController';
 
 const router = Router();
 
 // define routes
-router.route('/getCurrentUser').get(userController.getCurrentUser);
+router.route('/getCurrentUser').get(UserController.getCurrentUser);
 
 export default router;
