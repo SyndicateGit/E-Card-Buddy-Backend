@@ -2,6 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 import UserInterface from './UserInterface';
 import bcrypt from 'bcrypt';
 import {Role} from '../../types/types';
+import ReminderModel from '../Reminders/ReminderModel';
 
 // Define the User Schema
 const UserSchema = new Schema({
@@ -23,7 +24,7 @@ const UserSchema = new Schema({
     type: String,
     required: true,
     default: "user",
-  }
+  },
 });
 
 UserSchema.pre('save', async function (next) {

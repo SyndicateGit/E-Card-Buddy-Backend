@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import UserModel from '../users/UserModel';
+import UserModel from '../Users/UserModel';
 import jwt from 'jsonwebtoken';
 const asyncHandler = require("express-async-handler");
 

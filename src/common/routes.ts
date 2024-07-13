@@ -4,14 +4,15 @@ import jwt from 'jsonwebtoken';
 const router: Router = Router();
 
 // import routes
-import userRouter from '../resources/users/UserRoutes';
-import authRouter from '../resources/auth/AuthRoutes';
-import UserModel from '../resources/users/UserModel';
+import UserRouter from '../resources/Users/UserRoutes';
+import AuthRouter from '../resources/Auth/AuthRoutes';
+import ReminderRouter from '../resources/Reminders/ReminderRoutes';
+import UserModel from '../resources/Users/UserModel';
 const asyncHandler = require("express-async-handler");
 // Higher level routes definition
 
 
-router.use('/auth', authRouter);
+router.use('/auth', AuthRouter);
 
 // Middleware to get user from token
 router.use(asyncHandler( async (req: Request, res: Response, next: NextFunction) => {
@@ -36,7 +37,7 @@ router.use(asyncHandler( async (req: Request, res: Response, next: NextFunction)
 }));
 // custom-types.d.ts
 import { Request } from 'express';
-import UserInterface from '../resources/users/UserInterface';
+import UserInterface from '../resources/Users/UserInterface';
 
 declare module 'express-serve-static-core' {
   interface Request {
@@ -44,8 +45,8 @@ declare module 'express-serve-static-core' {
   }
 }
 
-router.use('/user', userRouter);
-
+router.use('/user', UserRouter);
+router.use('/reminder', ReminderRouter);
 
 
 export default router;
