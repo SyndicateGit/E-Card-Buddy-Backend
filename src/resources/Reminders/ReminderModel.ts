@@ -18,7 +18,11 @@ const ReminderSchenma = new Schema({
     type: Boolean,
     required: true,
     default: false,
-  }
+  },
+  user_id: {
+    type: String,
+    required: true,
+  },
 });
 
 const ReminderModel = mongoose.model<ReminderInterface>('Reminder', ReminderSchenma);

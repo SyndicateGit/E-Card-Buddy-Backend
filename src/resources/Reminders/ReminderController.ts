@@ -9,13 +9,24 @@ const store = asyncHandler(async (req: Request, res: Response, next: NextFunctio
     const user = req.user;
 
     const { title, note, date_time, reminder_sent } = req.body;
-    const id = uuidv4();
 
-    const reminder = await ReminderModel.create({ id, title, note, date_time, reminder_sent, user_id: user._id });
+    const reminder = await ReminderModel.create({ title, note, date_time, reminder_sent, user_id: user._id });
 
     res.status(200).json({ success: true, data: {reminder: reminder }});
 });
 
+const getReminders = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const user = req.user;
+
+    const reminders = await ReminderModel.find({ user_id: user._id })
+    .catch((err) => {
+      throw new Error(err)
+    });
+
+    res.status(200).json({ success: true, data: {reminders: reminders }});
+});
+
 export default {
-  store
+  store,
+  getReminders,
 };
