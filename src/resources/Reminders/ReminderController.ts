@@ -26,7 +26,21 @@ const getReminders = asyncHandler(async (req: Request, res: Response, next: Next
     res.status(200).json({ success: true, data: {reminders: reminders }});
 });
 
+const deleteReminder = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const user = req.user;
+
+    const reminderId = req.params['id'];
+
+    const reminder = await ReminderModel.findOneAndDelete({ _id: reminderId, user_id: user._id })
+    .catch((err) => {
+      throw new Error(err)
+    });
+
+    res.status(200).json({ success: true, data: {reminder: reminder }});
+});
+
 export default {
   store,
   getReminders,
+  deleteReminder,
 };
